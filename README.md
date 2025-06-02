@@ -1,137 +1,124 @@
 # 🛌 Sleep Efficiency Classification & Regression
 
-This project analyzes sleep health data to **predict and classify sleep efficiency**, using machine learning techniques. It includes full preprocessing, feature engineering, model training, evaluation, and hyperparameter tuning.
+This project analyzes sleep health data to **predict and classify sleep efficiency** using modular Python code and machine learning.  
+All logic is implemented in `.py` files under the `src/` directory – no Jupyter notebooks needed.
 
 ---
 
 ## 📊 Project Objectives
 
-- **Regression**: Predict the actual sleep efficiency score (continuous value)
-- **Classification**: Classify whether a person's sleep efficiency is **"sufficient" (≥ 0.85)** or **"insufficient" (< 0.85)**
+- **Regression**: Predict the actual sleep efficiency score (continuous)
+- **Classification**: Determine whether sleep efficiency is **sufficient (≥ 0.85)**
 
 ---
 
-## 🧹 Preprocessing Steps
-
-All preprocessing is implemented in `src/preprocess.py`.
-
-- **Time Feature Engineering**  
-  - `Bedtime`, `Wakeup time` → Extract `hour` features
-- **Multicollinearity Removal**  
-  - Remove `Sleep duration` and `Deep sleep percentage`
-- **Binary Encoding**  
-  - Encode categorical variables: `Gender`, `Smoking status`
-- **Outlier Elimination**  
-  - Remove outliers in `Caffeine consumption` using IQR
-- **Missing Value Imputation**  
-  - Fill missing values using **median (numeric)** or **mode (categorical)**, stratified by `Gender`
-- **Optional Feature Drop**  
-  - Remove `REM sleep percentage`, `Light sleep percentage` when specified
-
----
-
-## ⚙️ Model Overview
-
-### 🔠 Classification
-
-- **Target**: Sleep_Label (1 if efficiency ≥ 0.85, else 0)
-- **Models Used**:
-  - Logistic Regression
-  - Decision Tree Classifier
-  - Random Forest Classifier
-- **Evaluation Metrics**:
-  - Accuracy
-  - Mean Squared Error (MSE)
-  - R² Score
-- **Validation**:
-  - Stratified K-Fold Cross Validation (k = 3, 5, 10)
-- **Tuning**:
-  - Performed using `GridSearchCV` and `RandomizedSearchCV` (Random Forest)
-
-📌 **Best Model**:  
-✅ Random Forest (RandomSearch, 5-Fold)
-
----
-
-### 📈 Regression
-
-- **Target**: Sleep efficiency (float)
-- **Models Used**:
-  - Linear Regression
-  - Random Forest Regressor
-  - Gradient Boosting Regressor
-- **Evaluation Metrics**:
-  - R² Score
-  - Mean Squared Error (MSE)
-- **Validation**:
-  - K-Fold Cross Validation (k = 3, 5, 10)
-- **Tuning**:
-  - Random Forest tuned via `GridSearchCV` and `RandomizedSearchCV`
-
-📌 **Best Model**:  
-✅ Random Forest Regressor (RandomSearch, 5-Fold)
-
----
-
-## ⚖️ Scaler Comparison
-
-To evaluate the effect of feature scaling, we compared:
-
-- `StandardScaler`
-- `MinMaxScaler`
-- `RobustScaler`
-
-**Result:**  
-All three scalers produced similar results.  
-➡️ `StandardScaler` was chosen for final use due to simplicity and interpretability.
-
----
-
-## 📁 Repository Structure
+## 📁 Project Structure
 
 ```
 datascience-termproject/
-├── notebooks/
-│   └── main.ipynb          # Kaggle notebook with full analysis
+├── main.py                         # Main script to run everything
 ├── src/
-│   └── preprocess.py       # Preprocessing function
-├── LICENSE                 # Apache License 2.0
-├── README.md               # This file
-├── requirements.txt        # Required packages
-└── .gitignore              # Files to ignore in Git
+│   ├── preprocess.py               # Preprocessing logic
+│   ├── scaler_experiment.py        # Compare scalers: Standard, MinMax, Robust
+│   ├── model_classification.py     # Classification training, tuning, evaluation
+│   └── model_regression.py         # Regression training, tuning, evaluation
+├── requirements.txt                # Required Python packages
+├── README.md                       # This file
+└── .gitignore
 ```
 
 ---
 
-## 🛠️ How to Run
+## ⚙️ Features
 
-1. Clone this repository:
+### 🧹 Preprocessing (`preprocess.py`)
+- Extract `hour` from `Bedtime`, `Wakeup time`
+- Drop multicollinear columns (e.g., `Sleep duration`)
+- Binary encoding of `Gender`, `Smoking status`
+- Remove caffeine outliers (IQR method)
+- Fill missing values (median/mode by gender)
+- Optionally drop `REM sleep %`, `Light sleep %`
 
-   ```bash
-   git clone https://github.com/yourusername/datascience-termproject.git
-   cd datascience-termproject
-   ```
+### 📈 Scaler Experiment (`scaler_experiment.py`)
+- Compares:
+  - `StandardScaler`
+  - `MinMaxScaler`
+  - `RobustScaler`
+- Measures RMSE, R² (regression) and accuracy (classification)
 
-2. Install required packages:
+### 🔠 Classification (`model_classification.py`)
+- Models: Logistic Regression, Decision Tree, Random Forest
+- Validation: Stratified K-Fold (k = 3, 5, 10)
+- Tuning: `GridSearchCV`, `RandomizedSearchCV`
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 🔢 Regression (`model_regression.py`)
+- Models: Linear Regression, Random Forest, Gradient Boosting
+- Validation: K-Fold (k = 3, 5, 10)
+- Tuning: `GridSearchCV`, `RandomizedSearchCV`
 
-3. Run the notebook:
+---
 
-   - Open `notebooks/main.ipynb` in Jupyter Notebook or VS Code
-   - Execute each cell step by step
+## ▶️ How to Run
 
-4. (Optional) Use `src/preprocess.py` as a reusable preprocessing module for new datasets
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/datascience-termproject.git
+cd datascience-termproject
+```
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Place your dataset
+
+Make sure your data file is in the root directory:
+
+```
+ModelingSet.csv
+```
+
+### 4. Run the project
+
+```bash
+python main.py
+```
+
+---
+
+## 🧪 Output
+
+- Scaler comparison results printed to terminal
+- Classification model performance summary
+- Regression model performance summary
+
+---
+
+## 📦 Requirements
+
+Listed in `requirements.txt`. To install:
+
+```bash
+pip install -r requirements.txt
+```
+
+Contents:
+
+```
+pandas
+numpy
+scikit-learn
+scipy
+```
 
 ---
 
 ## 📜 License
 
 This project is licensed under the **Apache License 2.0**.  
-You are free to use, modify, and distribute this code for commercial and non-commercial purposes.  
-Just include the LICENSE file and indicate any changes you made.
-
-See the [LICENSE](./LICENSE) file for full license text.
+You are free to use, modify, and distribute this code for commercial or non-commercial purposes.  
+See the [LICENSE](./LICENSE) file for details.
 
