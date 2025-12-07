@@ -105,7 +105,7 @@ datascience-termproject/
 
 ```bash
 git clone https://github.com/YeBeenChoi/DataScience_Termproject.git
-cd datascience-termproject
+cd DataScience-Termproject
 ```
 
 2. Install dependencies:
