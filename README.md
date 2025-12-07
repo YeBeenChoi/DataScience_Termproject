@@ -104,7 +104,7 @@ datascience-termproject/
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/datascience-termproject.git
+git clone https://github.com/YeBeenChoi/DataScience_Termproject.git
 cd datascience-termproject
 ```
 
